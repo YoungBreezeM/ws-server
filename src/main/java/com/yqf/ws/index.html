@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>websocket多人聊天室</title>
+
+    <style>
+        .container {
+            margin-top: 30px;
+            margin-left: 30px;
+        }
+        .span1 {
+            display: inline-block;
+            width: 80px;
+            font-size: 13px;
+        }
+        input {
+            width: 200px;
+            height: 30px;
+            outline: none;
+            border: 1px solid #3998f7;
+            border-radius: 3px;
+            padding: 0 10px;
+        }
+        input:hover,
+        textarea:hover {
+            box-shadow: 0 0 3px #3998f7;
+        }
+        #name {
+            margin-top: 15px;
+        }
+        button {
+            width: 100px;
+            height: 30px;
+            outline: none;
+            color: #fff;
+            font-size: 13px;
+            font-weight: bold;
+            background-color: #168ed1;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #connectBtn,
+        #content,
+        #sendBtn,
+        #closeBtn {
+            margin-top: 10px;
+        }
+        #messages {
+            margin-top: 20px;
+        }
+        textarea {
+            width: 300px;
+            height: 80px;
+            outline: none;
+            border: 1px solid #3998f7;
+            border-radius: 3px;
+            color: rgba(0, 0, 0, 0.7);
+            font-size: 13px;
+            font-weight: bold;
+            padding: 5px;
+        }
+        #messages, .me, .name {
+            color: rgba(0, 0, 0, 0.7);
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .me {
+            color: red;
+        }
+        .name {
+            color: royalblue;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <span class="span1">聊天室id:</span><input type="text" id="roomId" placeholder="请输入聊天室id" /><br />
+    <span class="span1">昵称:</span><input type="text" id="name" placeholder="请输入你的昵称" /><br />
+    <button id="connectBtn">连接</button><br />
+    <textarea id="content" placeholder="请输入要发送的消息"></textarea><br />
+    <button id="sendBtn">发送</button>
+    <button id="closeBtn">退出</button><br />
+    <div id="messages"></div>
+</div>
+
+<script type="text/javascript">
+    const connectBtn = document.getElementById("connectBtn");
+    const sendBtn = document.getElementById("sendBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const roomIdDOM = document.getElementById("roomId");
+    const nameDOM = document.getElementById("name");
+    const messagesDOM = document.getElementById("messages");
+    const contentDOM = document.getElementById("content");
+    let webSocket = null;
+
+    // 加入聊天室
+    connectBtn.addEventListener("click", () => {
+        const roomId = roomIdDOM.value;
+    const name = nameDOM.value;
+    if (!roomId || !name) {
+        alert("房间号和用户名不能为空");
+        return;
+    }
+    const url = "ws://localhost:8080/groupChat/" + roomId + "/" + name;
+    webSocket = new WebSocket(url);
+
+    webSocket.onerror = e => {
+        alert("出错了");
+    };
+    webSocket.onopen = e => {
+        messagesDOM.innerHTML = "您已加入聊天室！";
+        connectBtn.style.display = 'none'
+    };
+
+    webSocket.onmessage = e => {
+        const nickname = e.data.split(":")[0];
+        const data = e.data.slice(e.data.indexOf(':') + 1)
+        messagesDOM.innerHTML += `<br /><span class='${
+            nickname === name ? "me" : "name"
+        }'>${nickname === name ? "我" : nickname}: </span>&nbsp&nbsp;${data}`;
+    };
+
+    webSocket.onclose = e => {
+        connectBtn.style.display = 'none'
+        alert("您已退出聊天室");
+    };
+    });
+
+    // 发送消息
+    sendBtn.addEventListener("click", () => {
+        webSocket.send(contentDOM.value);
+    contentDOM.value = "";
+    });
+
+    // 退出聊天室
+    closeBtn.addEventListener("click", () => {
+        webSocket.close();
+    });
+</script>
+</body>
+</html>
