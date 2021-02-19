@@ -1,0 +1,13 @@
+<!--pages/home/home.wxml-->
+<view class="userInfo">
+  <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+  <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  <text class="userinfo-nickname">  在线{{online.length}}人</text>
+  <button bindtap="createPlay" class="createPlay">创建播放厅</button>
+</view>
+<scroll-view  scroll-y="true"  wx:for="{{rooms}}" wx:key="index">
+  <view class="user-item"  bindtap="addRoom" data-name="{{item}}">
+    {{item}}的播放厅
+  </view>
+</scroll-view>
+<view wx:if="{{rooms.length==0}}">无播放厅</view>

@@ -1,0 +1,53 @@
+/* pages/rooms/room.wxss */
+.video{
+  width: 100%;
+}
+
+.user-list{
+  width: 90%;
+  margin: auto;
+  height: 50vh;
+  border-radius: 20rpx;
+  border: 1px solid black;
+  display: flex;
+  overflow: scroll;
+}
+.user-item{
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 140rpx;
+  height: 140rpx;
+  margin: 20rpx;
+  border: 1px solid black;
+}
+.user-item image{
+  height: 100rpx;
+  width: 100rpx;
+  border-radius: 50rpx;
+  margin: auto;
+}
+
+.user-item text{
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.bottom-search{
+  display: flex;
+  width: 100%;
+  height: 100rpx;
+  position: absolute;
+  bottom: 20rpx
+}
+
+
+
+.bottom-search input{
+  width: 90%;
+  height: 90rpx;
+  margin: auto;
+  border: 1px solid black;
+  border-radius: 20rpx;
+}
+

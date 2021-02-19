@@ -1,0 +1,35 @@
+/* pages/home/home.wxss */
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  margin: auto;
+  border-radius: 50rpx;
+}
+
+.userinfo-nickname {
+  color: black;
+}
+
+
+
+.user-item{
+  width: 90%;
+  margin: auto;
+  margin-top: 20rpx;
+  text-align: center;
+  line-height: 150rpx;
+  height: 150rpx;
+  border: 1px solid black;
+  border-radius: 10rpx;
+}
+
+.createPlay{
+  border: 1px solid black;
+}

@@ -1,0 +1,22 @@
+<!--pages/rooms/room.wxml-->
+<video 
+id="asyncVideo" 
+src="{{src}}"
+ class="video" 
+ page-gesture="true"
+ bindtimeupdate="oNprocess"
+ bindplay="play"
+ bindpause="pause"
+ bindended="videoEnd"
+></video>
+<view class="user-list" >
+  <view class="user-item" wx:for="{{users}}" wx:key="index">
+  <image src="{{item.avatarUrl}}" mode="cover" ></image>
+  <text >{{item.nickName}}</text>
+  </view>
+  <view>
+  </view>
+</view>
+<view class="bottom-search">
+  <input maxlength="10000" type="text" placeholder="请输入地址" bindinput="setUrl"></input>
+</view>
